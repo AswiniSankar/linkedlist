@@ -1,3 +1,4 @@
+//to detect the loop in the linked list
 #include<stdio.h>
 #include<stdlib.h>
 struct node

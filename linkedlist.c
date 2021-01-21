@@ -1,4 +1,25 @@
-//to detect the loop in the linked list
+//to print element from reverse
+/*
+1.insert
+2.display
+3.rprint
+4.exit
+1
+4
+1
+5
+1
+6
+1
+
+7
+2
+4->5->6->7->
+3
+2
+6
+4
+*/
 #include<stdio.h>
 #include<stdlib.h>
 struct node
@@ -6,108 +27,71 @@ struct node
   int data;
   struct node * next;
 };
+struct node* head=NULL;
 void insert();
-void  display();
-void  detect();
-int len();
- void change();
-int count=0;
-struct node* root=NULL;
+void display();
+void rprint();
 int main()
 {
   int c;
-  printf("1.insert\n2.detect\n3.exit\n");
+  printf("1.insert\n2.display\n3.rprint\n4.exit\n");
   while(1)
-  { scanf("%d",&c);
-   switch(c)
   {
-    case 1:
-      insert();
-      break;
-    case 2:
-      display();
-      break;
-    case 3:
-      detect();break;
-    case 4:exit(1);
-    default: printf("invalid option\n");
+    scanf("%d",&c);
+    switch(c)
+    {
+   case 1:insert();break;
+   case 2:display();break;
+   case 3:rprint();break;
+   case 4:exit(1);
+   default:printf("invalid option\n");
+    }
   }
- }
- return 0;
 }
 void insert()
 {
-  struct node *cur=root;
-  struct node*t;
+  struct node* t,*temp;
+  int ele;
+  scanf("%d",&ele);
   t=(struct node*)malloc(sizeof(struct node));
-  printf("enter the data\n");
-  scanf("%d",&t->data);
+  t->data=ele;
   t->next=NULL;
- 
-  if(root==NULL)
-    root=t;
-  else
-  {
-     while(cur->next!=NULL)
-      cur=cur->next;
-    cur->next=t;
-  }
-
+   if(head==NULL)
+     head=t;
+   else
+   {temp=head;
+    while(temp->next!=NULL)
+       temp=temp->next;
+    temp->next=t;
+   }
 }
 void display()
 {
   struct node* temp;
-  if(temp==NULL)
-     printf("list is empty\n");
-  else
- { temp=root;
+   temp=head;
     while(temp!=NULL)
-    {printf("%d\n",temp->data);
-      temp=temp->next;
-     count++;
+    {
+    printf("%d->",temp->data);  
+      temp=temp->next; 
     }
-  }
+  printf("\n");
 }
-int len()
+void rprint()
 {
- if(root==NULL)
-  return 0;
- else
-   return count;
-}
-void detect()
-{
- 
-   change();
-  struct node *slow=root,*fast=root;
-   int flag=0;
-  while(slow && fast && fast->next)
+  int n,c=0;
+  struct node*p,*t;
+  scanf("%d",&n);
+  t=head;
+  while(t!=NULL)
   {
-     slow=slow->next;
-      fast=fast->next->next;
-      if(slow==fast)
-        { printf("loop found\n");
-           flag=1;
-           exit(1);
-        } 
- }
-  if(flag==0)
-    printf("loop not found\n");
+  c++;
+  if(c==n)
+    p=head;
+  if(c>n)
+   p=p->next;
+  t=t->next;
+  }
+  printf("%d\n",p->data);
 }
-void change()
-{
-  int pos,c=0;
-  struct node *last=root,*temp=root;
-  //root->next->next->next->next->next=root->next->next;
-  printf("lenght of the list %d\n",len());
-  printf("enter the loop position between 1 to lenght of the list\n");
-  scanf("%d",&pos);
-  while(last->next!=NULL)
-    last=last->next;
-  while(c<pos)
-   { temp=temp->next;
-      c++;
-   }
-  last->next=temp;
 
-}
+
